@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Next Step</title>
+<meta name="description" content="Turn an overwhelming to-do list into one calm next action.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="brand" aria-hidden="true"><span class="dot"></span> One Next Step</div>
+  <nav class="top-actions" aria-label="App">
+    <button type="button" class="ghost" id="btn-help" aria-haspopup="dialog" aria-controls="help">Shortcuts <kbd>?</kbd></button>
+    <button type="button" class="ghost" id="btn-reset">Start over</button>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+  <!-- Screen 1: brain dump -->
+  <section id="screen-dump" class="screen" aria-labelledby="dump-title">
+    <h1 id="dump-title">What's on your mind?</h1>
+    <p class="lede">Dump everything here, one thing per line. Messy is fine. You won't see this list again until you ask for it.</p>
+    <label for="dump" class="sr-only">Your tasks, one per line</label>
+    <textarea id="dump" rows="8" spellcheck="true" placeholder="essay for history due friday&#10;reply to landlord email&#10;book dentist appointment&#10;laundry"></textarea>
+
+    <fieldset class="choices">
+      <legend>How much energy do you have right now?</legend>
+      <div class="seg" role="radiogroup">
+        <label><input type="radio" name="energy" value="low"> <span>Low</span></label>
+        <label><input type="radio" name="energy" value="medium" checked> <span>Some</span></label>
+        <label><input type="radio" name="energy" value="high"> <span>Plenty</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="choices">
+      <legend>How long can you focus?</legend>
+      <div class="seg" role="radiogroup">
+        <label><input type="radio" name="minutes" value="5"> <span>5 min</span></label>
+        <label><input type="radio" name="minutes" value="15" checked> <span>15 min</span></label>
+        <label><input type="radio" name="minutes" value="25"> <span>25 min</span></label>
+      </div>
+    </fieldset>
+
+    <button type="button" class="primary" id="btn-start">Show me one next step <kbd>Ctrl</kbd>+<kbd>Enter</kbd></button>
+    <p class="hint" id="dump-error" role="alert"></p>
+  </section>
+
+  <!-- Screen 2: focus -->
+  <section id="screen-focus" class="screen" hidden aria-labelledby="step-text">
+    <p class="eyebrow" id="task-name"></p>
+    <h1 id="step-text" class="step" tabindex="-1"></h1>
+    <p class="why" id="why"></p>
+
+    <div class="timer" id="timer" aria-hidden="true">
+      <svg viewBox="0 0 120 120" class="ring"><circle cx="60" cy="60" r="54" class="track"/><circle cx="60" cy="60" r="54" class="bar" id="ring-bar"/></svg>
+      <span id="timer-text">15:00</span>
+    </div>
+    <p class="sr-only" id="timer-sr"></p>
+
+    <div class="actions">
+      <button type="button" class="primary" id="btn-done">Done <kbd>D</kbd></button>
+      <button type="button" id="btn-split">Too big, make it smaller <kbd>S</kbd></button>
+      <button type="button" id="btn-skip">Not now <kbd>N</kbd></button>
+    </div>
+    <div class="actions minor">
+      <button type="button" class="ghost" id="btn-timer">Start timer <kbd>T</kbd></button>
+      <button type="button" class="ghost" id="btn-speak">Read aloud <kbd>R</kbd></button>
+      <button type="button" class="ghost" id="btn-list" aria-expanded="false" aria-controls="peek">Peek at the list <kbd>L</kbd></button>
+    </div>
+
+    <div id="peek" class="peek" hidden>
+      <h2>Everything, for later</h2>
+      <ol id="peek-list"></ol>
+    </div>
+
+    <div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
+    <p class="progress-label" id="progress-label"></p>
+  </section>
+
+  <!-- Screen 3: finished -->
+  <section id="screen-done" class="screen" hidden aria-labelledby="done-title">
+    <h1 id="done-title" tabindex="-1">That's everything.</h1>
+    <p class="lede" id="done-summary"></p>
+    <ul id="done-list" class="done-list"></ul>
+    <button type="button" class="primary" id="btn-again">Start a new list</button>
+  </section>
+</main>
+
+<dialog id="help" aria-labelledby="help-title">
+  <h2 id="help-title">Keyboard shortcuts</h2>
+  <dl class="keys">
+    <dt><kbd>D</kbd></dt><dd>Mark this step done</dd>
+    <dt><kbd>S</kbd></dt><dd>Split this step into something smaller</dd>
+    <dt><kbd>N</kbd></dt><dd>Not now, move this task to the end</dd>
+    <dt><kbd>T</kbd></dt><dd>Start or pause the focus timer</dd>
+    <dt><kbd>R</kbd></dt><dd>Read the step aloud</dd>
+    <dt><kbd>L</kbd></dt><dd>Show or hide the full list</dd>
+    <dt><kbd>Ctrl</kbd>+<kbd>Enter</kbd></dt><dd>Start from the brain dump</dd>
+  </dl>
+  <form method="dialog"><button class="primary">Got it</button></form>
+</dialog>
+
+<div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<script src="app.js"></script>
+</body>
+</html>
